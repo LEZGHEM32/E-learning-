@@ -47,6 +47,11 @@ const ActivationModal: React.FC<ActivationModalProps> = ({ isOpen, onClose, cour
     alert('تم نسخ الكود!');
   }
 
+  const handleUseGeneratedCode = () => {
+    setActivationCode(generatedCode);
+    setActiveTab('code');
+  };
+
   const courseTitle = courseId === 'philosophy' ? 'الفلسفة' : 'الأدب العربي';
 
   return (
@@ -123,7 +128,7 @@ const ActivationModal: React.FC<ActivationModalProps> = ({ isOpen, onClose, cour
                 <Button 
                   variant="primary" 
                   className="w-full"
-                  onClick={() => onSuccess(courseId)}
+                  onClick={handleUseGeneratedCode}
                 >
                   <KeyIcon className="w-5 h-5"/>
                   استخدم الكود وقم بالتفعيل الآن

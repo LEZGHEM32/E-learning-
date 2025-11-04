@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import type { Page, User, Course, CourseId } from './types';
 import { COURSES_DATA } from './constants';
 import Header from './components/Header';
@@ -8,6 +8,15 @@ import CourseDetailPage from './components/CourseDetailPage';
 import AuthModal from './components/AuthModal';
 import ActivationModal from './components/ActivationModal';
 
+// A key for localStorage
+const PREFERENCES_STORAGE_KEY = 'alkholasa-course-preferences';
+
+// Define the shape of our preferences
+interface CoursePreferences {
+  order: CourseId[];
+  hidden: CourseId[];
+}
+
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
@@ -15,6 +24,33 @@ const App: React.FC = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isActivationModalOpen, setIsActivationModalOpen] = useState(false);
   const [courseToActivate, setCourseToActivate] = useState<CourseId | null>(null);
+  const [coursePreferences, setCoursePreferences] = useState<CoursePreferences>({
+    order: COURSES_DATA.map(c => c.id),
+    hidden: [],
+  });
+
+  // Load preferences from localStorage on initial render
+  useEffect(() => {
+    try {
+      const savedPreferences = localStorage.getItem(PREFERENCES_STORAGE_KEY);
+      if (savedPreferences) {
+        const parsed = JSON.parse(savedPreferences);
+        if (parsed.order && parsed.hidden) {
+            // Reconcile with current courses data in case a course was added/removed
+            const currentCourseIds = new Set(COURSES_DATA.map(c => c.id));
+            const savedOrder = parsed.order.filter((id: CourseId) => currentCourseIds.has(id));
+            const newCourseIds = Array.from(currentCourseIds).filter(id => !savedOrder.includes(id));
+            
+            setCoursePreferences({
+                order: [...savedOrder, ...newCourseIds],
+                hidden: parsed.hidden.filter((id: CourseId) => currentCourseIds.has(id)),
+            });
+        }
+      }
+    } catch (error) {
+      console.error("Failed to load course preferences from localStorage", error);
+    }
+  }, []);
 
   const handleSelectCourse = useCallback((course: Course) => {
     setSelectedCourse(course);
@@ -94,6 +130,15 @@ const App: React.FC = () => {
     });
   }, []);
 
+  const handleUpdateCoursePreferences = useCallback((newPreferences: CoursePreferences) => {
+    setCoursePreferences(newPreferences);
+    try {
+      localStorage.setItem(PREFERENCES_STORAGE_KEY, JSON.stringify(newPreferences));
+    } catch (error) {
+      console.error("Failed to save course preferences to localStorage", error);
+    }
+  }, []);
+
 
   const renderContent = () => {
     if (currentPage === 'course' && selectedCourse) {
@@ -108,7 +153,14 @@ const App: React.FC = () => {
         />
       );
     }
-    return <HomePage courses={COURSES_DATA} onSelectCourse={handleSelectCourse} />;
+    return (
+      <HomePage
+        courses={COURSES_DATA}
+        onSelectCourse={handleSelectCourse}
+        preferences={coursePreferences}
+        onUpdatePreferences={handleUpdateCoursePreferences}
+      />
+    );
   };
 
   return (
