@@ -141,7 +141,7 @@ export const COURSES_DATA: Course[] = [
     description: 'مادة شاملة في الفلسفة مصممة خصيصًا لتلاميذ الباكالوريا حسب البرنامج الرسمي لكل شعبة.',
     longDescription: 'انضم إلى مادة الفلسفة الشاملة للأستاذ لزغم عبد الحق، والتي تغطي كل جوانب البرنامج السنوي للباكالوريا. اختر شعبتك أدناه للوصول إلى المحتوى المخصص لك. من خلال دروس فيديو تفصيلية وجزء تطبيقي، ستتمكن من فهم أعمق المفاهيم الفلسفية والاستعداد التام للامتحان.',
     icon: PhilosophyIcon,
-    imageUrl: 'https://images.unsplash.com/photo-1531594390396-fde2642a453f?q=80&w=800&auto=format&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1974&auto=format&fit=crop',
     annualProgramPdfUrl: DUMMY_PDF,
     specializations: [
       {
@@ -174,7 +174,7 @@ export const COURSES_DATA: Course[] = [
     description: 'تحليل معمق لنصوص الأدب العربي وتطبيقات عملية للباكالوريا.',
     longDescription: 'تقدم هذه المادة في الأدب العربي تحليلاً شاملاً للنصوص الشعرية والنثرية المقررة في امتحان الباكالوريا. مع الأستاذ لزغم عبد الحق، ستتعلم منهجيات التحليل الأدبي وتكتسب المهارات اللازمة للإجابة بثقة في الامتحان.',
     icon: ArabicIcon,
-    imageUrl: 'https://images.unsplash.com/photo-1581373445842-870c1ceb487e?q=80&w=800&auto=format&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1524103416227-969447402c31?q=80&w=2070&auto=format&fit=crop',
     annualProgramPdfUrl: DUMMY_PDF,
     specializations: [
       {
