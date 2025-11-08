@@ -37,6 +37,7 @@ model Course {
   category    Category? @relation(fields: [categoryId], references: [id])
   categoryId  String?
   enrollments Enrollment[]
+  comments    Comment[]
   createdAt   DateTime  @default(now())
 }
 
@@ -47,6 +48,7 @@ model Lesson {
   order     Int      @default(0)
   course    Course   @relation(fields: [courseId], references: [id])
   courseId  String
+  progresses Progress[]
   createdAt DateTime @default(now())
 }
 
@@ -57,7 +59,6 @@ model Enrollment {
   course    Course   @relation(fields: [courseId], references: [id])
   courseId  String
   enrolledAt DateTime @default(now())
-  progress  Progress?
 }
 
 model Progress {
