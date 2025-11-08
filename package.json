@@ -6,15 +6,31 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev --name init",
+    "prisma:studio": "prisma studio",
+    "seed": "ts-node --project tsconfig.node.json --transpile-only prisma/seed.ts",
+    "dev:db": "docker-compose up -d",
+    "admin:start": "ts-node --project tsconfig.node.json src/admin/index.ts"
   },
   "dependencies": {
+    "@adminjs/express": "^6.1.0",
+    "@adminjs/prisma": "^5.0.1",
+    "@prisma/client": "^5.22.0",
+    "adminjs": "^7.8.13",
+    "bcrypt": "^5.1.1",
+    "express": "^4.21.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^5.0.0",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
+    "prisma": "^5.22.0",
+    "ts-node": "^10.9.2",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   }
